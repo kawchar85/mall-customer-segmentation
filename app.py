@@ -150,22 +150,9 @@ with col_info:
     counts = df_out["Cluster"].value_counts().sort_index().to_frame("Count")
     st.dataframe(counts, use_container_width=True)
 
-# ── Cluster Profiles ──────────────────────────────────────────
-st.markdown("---")
-st.header("Cluster Profiles")
-st.caption("Mean values per cluster — use this to interpret what each cluster represents.")
-
-profile = df_out[["Age", "Annual Income", "Spending Score", "Cluster"]]\
-    .groupby("Cluster").mean().round(1)
-profile.insert(0, "Count", df_out.groupby("Cluster").size())
-st.dataframe(profile, use_container_width=True)
 
 # ── Download ──────────────────────────────────────────────────
 st.markdown("---")
 csv = df_out.to_csv(index=False).encode("utf-8")
 st.download_button("⬇️ Download Clustered Data", csv,
                    "clustered_customers.csv", "text/csv")
-
-# ── Footer ────────────────────────────────────────────────────
-st.markdown("---")
-st.caption("Class 15 — Cluster Analysis | aiQuest Intelligence")
